@@ -6,10 +6,9 @@
    * fix 경우 원본에서 에러사항 수정 및 보완, update 경우 수정이 아닌 기능의 강화
 
 #branch rules - 참고 (https://rumblefish.tistory.com/65)
-  1. master - Final version branch
-    (ver x.y) : x,y는 중복 x
-  2. release - feature merge branch
-    (rel x.y) : x,y는 중복 x, README 파일에 merge된 Activity명 작성
-  3. feature - Activity branch
-    (feat "x Activity") : x는 activity 명
+  1. master - Final version branch (ver 0.0)
+  2. develop - feature merge, commit (ver 0.0 feat_x, feat_y...)
+  3. release - Only Bug Fix branch (ver 0.0)
+  4. feature_x - Activity branch 
+      x : Activity name ( ex : feature_map)
     

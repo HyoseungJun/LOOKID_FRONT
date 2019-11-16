@@ -11,4 +11,3 @@
   3. release - Only Bug Fix branch (ver 0.0)
   4. feature_x - Activity branch 
       x : Activity name ( ex : feature_map)
-    

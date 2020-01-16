@@ -21,6 +21,7 @@ class User_Control(context: Context){
         editPreferences.putString("bank_holder",user.bank_holder)
         editPreferences.apply()
     }
+    fun set_rv_pid(rv_pid : Int){ editPreferences.putInt("rv_pid",rv_pid)}
 
     fun get_token() : String? { return sharedPreferences.getString("token",null)}
     fun get_auto_login() : Boolean { return sharedPreferences.getBoolean("auto_login",false)}
@@ -33,4 +34,5 @@ class User_Control(context: Context){
         )
         return user
     }
+    fun get_rv_pid() : Int { return sharedPreferences.getInt("rv_pid",-1)}
 }

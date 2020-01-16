@@ -1,22 +1,15 @@
 package lookid_front.lookid.Service
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import lookid_front.lookid.Activity.*
-import lookid_front.lookid.Control.Json
-import lookid_front.lookid.Control.Okhttp
-import lookid_front.lookid.Dialog.Loading_Dialog
-import lookid_front.lookid.Entity.Reservation_Entity
-import lookid_front.lookid.R
-import org.json.JSONObject
+import lookid_front.lookid.Entity.Reservation
 
 class ResInfo_Service : Service() {
-    var res = Reservation_Entity()
+    var res = Reservation()
 
     override fun onBind(intent: Intent): IBinder? {
         Log.d("ResInfo_Service","onBind")

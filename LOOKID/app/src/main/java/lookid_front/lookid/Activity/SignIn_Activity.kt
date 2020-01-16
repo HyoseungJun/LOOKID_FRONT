@@ -59,8 +59,9 @@ class SignIn_Activity : AppCompatActivity() {
         }
     }
     inner class asynctask : AsyncTask<String, Void, String>(){
+        var url = ""
         override fun doInBackground(vararg params: String): String {
-            val url = params[0]
+            url = params[0]
             val id = params[1]
             val pw = params[2]
             return Okhttp(applicationContext).POST(url, Json().login(id,pw))
@@ -72,6 +73,7 @@ class SignIn_Activity : AppCompatActivity() {
                 Log.d("SignIn_Activity", "null in")
                 return
             }
+            Log.d("SignIn_Activity",url)
             Log.d("SignIn_Activity",response)
             //response 값이 json문이 아니면 통신 오류 메세지 출력
             if(!Json().isJson(response)){

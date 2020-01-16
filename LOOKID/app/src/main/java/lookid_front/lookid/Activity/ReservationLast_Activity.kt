@@ -5,11 +5,9 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_reservation_last.*
 import lookid_front.lookid.Control.Date_Control
 import lookid_front.lookid.Control.Group_adapter_ResLast
@@ -17,16 +15,15 @@ import lookid_front.lookid.Control.Json
 import lookid_front.lookid.Control.Okhttp
 import lookid_front.lookid.Dialog.Basic_Dialog
 import lookid_front.lookid.Dialog.Refund_Dialog
-import lookid_front.lookid.Entity.Reservation_Entity
+import lookid_front.lookid.Entity.Reservation
 import lookid_front.lookid.R
-import lookid_front.lookid.R.id.*
 import org.json.JSONObject
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReservationLast_Activity : AppCompatActivity(){
-    lateinit var reservation_Entity : Reservation_Entity
+    lateinit var reservation_ : Reservation
     var devicenum : Int = 0
     lateinit var group_Adapter : Group_adapter_ResLast
     val dateFormat = SimpleDateFormat(Date_Control().dateFormat, Locale.KOREA)
@@ -41,37 +38,37 @@ class ReservationLast_Activity : AppCompatActivity(){
         //page 초기화
         fun res_init(){
             val intent = intent
-            reservation_Entity = intent.getSerializableExtra("res") as Reservation_Entity
+            reservation_ = intent.getSerializableExtra("res") as Reservation
             devicenum = intent.getIntExtra("res_devicenum",0)
             val useday = intent.getLongExtra("res_useday",0)
 
             //결제 정보 초기화
-            reslast_resname_TextView.text = reservation_Entity.r_name
-            reslast_name_TextView.text = reservation_Entity.user.name
-            reslast_phone_TextView.text = reservation_Entity.user.phone
-            reslast_bank_TextView.text = reservation_Entity.user.bank_toString()
-            reslast_startdate_TextView.text = dateFormat.format(reservation_Entity.s_date)
-            reslast_enddate_TextView.text = dateFormat.format(reservation_Entity.e_date)
-            reslast_address_TextView.text = (reservation_Entity.user.address + " " +reservation_Entity.user.address_detail)
+            reslast_resname_TextView.text = reservation_.r_name
+            reslast_name_TextView.text = reservation_.user.name
+            reslast_phone_TextView.text = reservation_.user.phone
+            reslast_bank_TextView.text = reservation_.user.bank_toString()
+            reslast_startdate_TextView.text = dateFormat.format(reservation_.s_date)
+            reslast_enddate_TextView.text = dateFormat.format(reservation_.e_date)
+            reslast_address_TextView.text = (reservation_.user.address + " " +reservation_.user.address_detail)
             reslast_devicenum_TextView.text = devicenum.toString()
 
             val payformat = DecimalFormat("###,###")
             reslast_pay_TextView.text = payformat.format(useday * devicenum * 1500)
-            reslast_deposit_TextView.text = payformat.format(reservation_Entity.deposit)
+            reslast_deposit_TextView.text = payformat.format(reservation_.deposit)
             if(useday * devicenum * 1500 < 50000)
                 reslast_postpay_TextView.text = payformat.format(5000)
-            reslast_totalpay_TextView.text = payformat.format(reservation_Entity.cost)
-            if(reservation_Entity.receipt_item == 0)
+            reslast_totalpay_TextView.text = payformat.format(reservation_.cost)
+            if(reservation_.receipt_item == 0)
                 reslast_rec_TextView.text = "택배"
             else
                 reslast_rec_TextView.text = "방문"
-            if(reservation_Entity.return_item == 0)
+            if(reservation_.return_item == 0)
                 reslast_ret_TextView.text = "택배"
             else
                 reslast_ret_TextView.text = "방문"
 
             //그룹 리사이클러뷰 초기화
-            group_Adapter = Group_adapter_ResLast(this@ReservationLast_Activity,reservation_Entity.group_list)
+            group_Adapter = Group_adapter_ResLast(this@ReservationLast_Activity,reservation_.group_list)
             reslast_grouplist_RecView.adapter = group_Adapter
             reslast_grouplist_RecView.setItemViewCacheSize(100)
         }
@@ -94,8 +91,8 @@ class ReservationLast_Activity : AppCompatActivity(){
         }
         fun POST_res(){
             val url = getString(R.string.server_url)+getString(R.string.reservation)
-            Log.d("ResLast_Activity",Json().reservation(reservation_Entity))
-            asynctask().execute(url,Json().reservation(reservation_Entity))
+            Log.d("ResLast_Activity",Json().reservation(reservation_))
+            asynctask().execute(url,Json().reservation(reservation_))
         }
     }
     inner class asynctask : AsyncTask<String, Void, String>(){

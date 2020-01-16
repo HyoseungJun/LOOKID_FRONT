@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:gravity="center"
@@ -559,7 +561,7 @@
                     android:layout_height="300dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                 <Button
                     android:id="@+id/res_groupadd_Button"
@@ -696,7 +698,7 @@
                 android:id="@+id/res_resvation_Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/view_round_fore"
                 android:onClick="res_Click_Listener"

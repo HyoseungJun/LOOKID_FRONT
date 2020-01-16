@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -16,7 +15,7 @@ import lookid_front.lookid.Dialog.Address_Dialog
 import lookid_front.lookid.Dialog.Bank_Dialog
 import lookid_front.lookid.Dialog.Basic_Dialog
 import lookid_front.lookid.Entity.Group
-import lookid_front.lookid.Entity.Reservation_Entity
+import lookid_front.lookid.Entity.Reservation
 import lookid_front.lookid.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -27,7 +26,7 @@ class Reservation_Activity : AppCompatActivity() {
     var Res_Activity : Reservation_Activity? = null
     var devicenum : Int = 0;
     var bank_list = arrayOf("")
-    var Reservation_Entity = Reservation_Entity()
+    var Reservation_Entity = Reservation()
     var group_list = arrayListOf<Group>(Group())
     lateinit var group_Adapter : Group_adapter
     var calendar : Calendar = Calendar.getInstance()

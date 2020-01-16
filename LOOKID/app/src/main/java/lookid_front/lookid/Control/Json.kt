@@ -46,9 +46,9 @@ class Json(){
         return jsonObject.toString()
     }
 
-    fun reservation(reservation_Entity: Reservation_Entity) : String{
-        jsonObject = JSONObject(Gson().toJson(reservation_Entity))
-        var str = "{\"reservation\":${Gson().toJson(reservation_Entity)}}"
+    fun reservation(reservation_: Reservation) : String{
+        jsonObject = JSONObject(Gson().toJson(reservation_))
+        var str = "{\"reservation\":${Gson().toJson(reservation_)}}"
         jsonObject = JSONObject(str)
         var userjson = jsonObject.getJSONObject("reservation").getJSONObject("user")
 
@@ -84,7 +84,7 @@ class Json(){
         return jsonObject.toString()
     }
 
-    fun to_Res(str : String) : Reservation_Entity{
+    fun to_Res(str : String) : Reservation{
         val group_list : ArrayList<Group> = arrayListOf()
         val json = JSONObject(str)
         val jsonary_group = json.getJSONArray("group_list")
@@ -107,7 +107,7 @@ class Json(){
         }
         val json_res = json.getJSONObject("reservation")
         Log.d("JSON",json_res.toString())
-        return Reservation_Entity(json_res.getInt("rv_pid"),json_res.getString("r_name"),json_res.getLong("r_date"),json_res.getLong("s_date"),
+        return Reservation(json_res.getInt("rv_pid"),json_res.getString("r_name"),json_res.getLong("r_date"),json_res.getLong("s_date"),
                 json_res.getLong("e_date"),json_res.getInt("receipt_item"),json_res.getInt("return_item"),json_res.getInt("cost"),
                 json_res.getInt("deposit"),json_res.getString("wb_num"),json_res.getInt("state"),group_list,
                 User("id",json_res.getString("name"),json_res.getString("phone"),"email",json_res.getString("address"),json_res.getString("bank_name"),

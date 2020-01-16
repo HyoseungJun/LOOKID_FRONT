@@ -1,17 +1,15 @@
 package lookid_front.lookid.Activity
 
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_reslist.*
 import lookid_front.lookid.Control.Json
 import lookid_front.lookid.Control.Okhttp
 import lookid_front.lookid.Control.Res_adapter
-import lookid_front.lookid.Entity.Reservation_Entity
+import lookid_front.lookid.Entity.Reservation
 import lookid_front.lookid.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -56,10 +54,10 @@ class ResList_Activity : AppCompatActivity() {
                 return
             }
             val jsonAry = JSONArray(response)
-            val resList: ArrayList<Reservation_Entity> = arrayListOf()
+            val resList: ArrayList<Reservation> = arrayListOf()
             for (i in 0 until jsonAry.length()) {
                 val jsonObj: JSONObject = jsonAry.getJSONObject(i)
-                resList.add(Reservation_Entity(jsonObj.getInt("rv_pid"), jsonObj.getString("r_name"), jsonObj.getLong("s_date"),
+                resList.add(Reservation(jsonObj.getInt("rv_pid"), jsonObj.getString("r_name"), jsonObj.getLong("s_date"),
                         jsonObj.getLong("e_date"), jsonObj.getInt("state")))
             }
             reslist_res_RecView.adapter = Res_adapter(this@ResList_Activity, resList)

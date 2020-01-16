@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-data class Reservation_Entity(
+data class Reservation(
         var rv_pid: Int, //인덱스
         var r_name: String, //예약명
         var r_date: Long = 0, //예약 날짜

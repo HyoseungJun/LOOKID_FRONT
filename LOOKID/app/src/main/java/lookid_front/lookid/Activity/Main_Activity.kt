@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
@@ -21,8 +21,7 @@ import lookid_front.lookid.Control.Res_adapter
 import lookid_front.lookid.Control.User_Control
 import lookid_front.lookid.Dialog.SignOut_Dialog
 import lookid_front.lookid.Dialog.Exit_Dialog
-import lookid_front.lookid.Entity.Reservation_Entity
-import lookid_front.lookid.Entity.User
+import lookid_front.lookid.Entity.Reservation
 import lookid_front.lookid.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -52,12 +51,15 @@ class Main_Activity : AppCompatActivity() {
         }
 
         fun init_WepView(){
+            main_missing_child_WebView.webViewClient = WebViewClient()
+            val webViewSettings = main_missing_child_WebView.settings
             main_missing_child_WebView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-            main_missing_child_WebView.settings.javaScriptEnabled = true
-            main_missing_child_WebView.settings.useWideViewPort = true
-            main_missing_child_WebView.settings.setSupportZoom(true)
-            main_missing_child_WebView.settings.defaultZoom = WebSettings.ZoomDensity.FAR
-            main_missing_child_WebView.settings.loadWithOverviewMode = true
+            webViewSettings.javaScriptEnabled = true
+            main_missing_child_WebView.setInitialScale(100)
+            //webViewSettings.useWideViewPort = true
+            //webViewSettings.loadWithOverviewMode = true
+            webViewSettings.setSupportZoom(true)
+            webViewSettings.defaultZoom = WebSettings.ZoomDensity.FAR
             var url = "${getString(R.string.server_url)}${getString(R.string.main_child_ad)}"
             main_missing_child_WebView.loadUrl(url)
         }
@@ -101,15 +103,17 @@ class Main_Activity : AppCompatActivity() {
             when(state){
                 0->{ //GET_check_date
                     val jsonObj = JSONObject(response)
-                    if(!jsonObj.getInt("rv_pid").toString().isEmpty())
+                    if(!jsonObj.getInt("rv_pid").toString().isEmpty()){
+                        User_Control(applicationContext).set_rv_pid(jsonObj.getInt("rv_pid"))
                         startActivity(Intent(applicationContext, Map_Activity::class.java).putExtra("rv_pid",jsonObj.getInt("rv_pid")).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-            }
+                    }
+                        }
                 2->{
                     val jsonAry = JSONArray(response)
-                    val resList : ArrayList<Reservation_Entity> = arrayListOf()
+                    val resList : ArrayList<Reservation> = arrayListOf()
                     for (i in 0 until jsonAry.length()){
                         val jsonObj : JSONObject = jsonAry.getJSONObject(i)
-                        resList.add(Reservation_Entity(jsonObj.getInt("rv_pid"),jsonObj.getString("r_name"),jsonObj.getLong("s_date"),
+                        resList.add(Reservation(jsonObj.getInt("rv_pid"),jsonObj.getString("r_name"),jsonObj.getLong("s_date"),
                                 jsonObj.getLong("e_date"),jsonObj.getInt("state")))
                     }
                     main_reslist_RecView.adapter = Res_adapter(this@Main_Activity, resList)
@@ -120,7 +124,8 @@ class Main_Activity : AppCompatActivity() {
     fun main_Click_Listener(view : View){
         when(view.id){
             R.id.main_reservation_View -> startActivity(Intent(applicationContext, Reservation_Activity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-            R.id.main_map_View ->startActivity(Intent(applicationContext, Map_Activity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            R.id.main_map_View ->startActivity(Intent(applicationContext, Map_Activity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    .putExtra("rv_pid",User_Control(applicationContext).get_rv_pid()))
             R.id.main_checkRes_View ->startActivity(Intent(applicationContext, ResList_Activity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             R.id.main_signout_Button ->Main_Control().GET_signout()
             R.id.main_logout_View -> Main_Control().GET_signout()

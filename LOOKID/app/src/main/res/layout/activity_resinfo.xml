@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_margin="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".Activity.ResInfo_Activity"
-    >
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Activity.ResInfo_Activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -708,7 +708,7 @@
                 android:id="@+id/resinfo_delete_Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/view_round_fore"
                 android:onClick="resinfo_Click_Listener"

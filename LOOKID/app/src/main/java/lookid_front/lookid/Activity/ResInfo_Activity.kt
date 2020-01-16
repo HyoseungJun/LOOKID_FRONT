@@ -2,7 +2,6 @@ package lookid_front.lookid.Activity
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,22 +10,20 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_reservation.*
 import kotlinx.android.synthetic.main.activity_resinfo.*
 import lookid_front.lookid.Control.*
 import lookid_front.lookid.Dialog.Address_Dialog
 import lookid_front.lookid.Dialog.Bank_Dialog
 import lookid_front.lookid.Dialog.Basic_Dialog
-import lookid_front.lookid.Entity.Reservation_Entity
+import lookid_front.lookid.Entity.Reservation
 import lookid_front.lookid.R
-import lookid_front.lookid.R.id.*
 import org.json.JSONObject
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ResInfo_Activity : AppCompatActivity() {
-    lateinit var res : Reservation_Entity
+    lateinit var res : Reservation
     lateinit var bank_list : Array<String>
     lateinit var group_Adapter : Group_adapter
     val dateFormat = SimpleDateFormat(Date_Control().dateFormat, Locale.KOREA)
@@ -40,7 +37,7 @@ class ResInfo_Activity : AppCompatActivity() {
         fun init(){
             bank_list = resources.getStringArray(R.array.bank_list)
             val intent = getIntent()
-            res = intent.getSerializableExtra("res") as Reservation_Entity
+            res = intent.getSerializableExtra("res") as Reservation
             GET_res_detail()
 
             if(res.state == 1)
